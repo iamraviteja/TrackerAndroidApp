@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -98,20 +98,23 @@ const ListSMS = () => {
     );
   };
 
-  useEffect(async () => {
-    if (Platform.OS === 'android') {
-      try {
-        if (!(await this.checkPermissions())) {
-          await this.requestPermissions();
-        }
+  useEffect(() => {
+    const checkData = async () => {
+      if (Platform.OS === 'android') {
+        try {
+          if (!(await checkPermissions())) {
+            await requestPermissions();
+          }
 
-        if (await this.checkPermissions()) {
-          hasPermissions = true;
+          if (await checkPermissions()) {
+            hasPermissions = true;
+          }
+        } catch (e) {
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
       }
-    }
+    };
+    checkData();
   });
 
   if (!SMSModule) return <Text>Module could not be loaded...</Text>;
