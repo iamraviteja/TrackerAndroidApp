@@ -141,7 +141,7 @@ const ListSMS = () => {
         accessibilityLabel="Learn more about this purple button"
       />
       {smslist.map(data => {
-        return <Text>{data.body}</Text>;
+        return <Section>{data.body}</Section>;
       })}
     </Section>
   );
